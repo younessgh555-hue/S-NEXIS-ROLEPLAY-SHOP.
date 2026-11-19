@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP-NEXIS-SHOP | Official SA-MP Roleplay Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron, Rajdhani & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#060a14',
+                        cardbg: '#0c1324',
+                        cardhover: '#121d36',
+                        nexisblue: '#2563eb',
+                        nexiscyan: '#38bdf8',
+                        nexisindigo: '#4f46e5',
+                        nexisemerald: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                        gaming: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #060a14;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060a14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2d4f;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+        .glass-header {
+            background: rgba(6, 10, 20, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.14);
+        }
+        .hero-banner-bg {
+            background: 
+                radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.28), transparent 48%),
+                radial-gradient(circle at 15% 80%, rgba(56, 189, 248, 0.18), transparent 48%),
+                linear-gradient(135deg, #0c1324 0%, #080d1a 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-nexiscyan selection:text-black">
+
+    <!-- 1. TOP ANNOUNCEMENT BAR (AT THE VERY TOP) -->
+    <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 border-b border-sky-400/25 text-white py-2.5 px-4 text-xs sm:text-sm relative z-40">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center">
+            <!-- Owner Badge -->
+            <div class="flex items-center gap-2 font-display font-bold tracking-wider text-sky-300">
+                <i class="fa-solid fa-crown text-amber-400"></i>
+                <span>Owner: <span class="text-white">YOUNESS•RICARDO</span></span>
+            </div>
+
+            <!-- Contact Numbers with One-Click Copy -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-gaming font-bold">
+                <span class="text-sky-200 hidden md:inline"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i>Contact / Paiement:</span>
+                
+                <button onclick="copyPhone('0684681909')" class="inline-flex items-center gap-1.5 bg-blue-950/90 hover:bg-blue-800 border border-sky-400/35 px-3 py-1 rounded-lg text-white transition cursor-pointer shadow-xs" title="Copier 0684681909">
+                    <i class="fa-solid fa-phone text-sky-400 text-xs"></i>
+                    <span class="tracking-wide">0684681909</span>
+                    <i class="fa-regular fa-copy text-[11px] text-sky-300"></i>
+                </button>
+
+                <span class="text-sky-400/60">/</span>
+
+                <button onclick="copyPhone('0707627802')" class="inline-flex items-center gap-1.5 bg-blue-950/90 hover:bg-blue-800 border border-sky-400/35 px-3 py-1 rounded-lg text-white transition cursor-pointer shadow-xs" title="Copier 0707627802">
+                    <i class="fa-solid fa-phone text-sky-400 text-xs"></i>
+                    <span class="tracking-wide">0707627802</span>
+                    <i class="fa-regular fa-copy text-[11px] text-sky-300"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none w-[90%] sm:w-auto max-w-sm">
+        <div class="bg-cardbg border border-nexiscyan/60 text-white px-4 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3">
+            <div id="toast-icon" class="w-9 h-9 rounded-xl bg-nexisblue/25 text-nexiscyan flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <p id="toast-title" class="font-gaming font-bold text-base text-nexiscyan tracking-wide">T-ZAD L'PANIER!</p>
+                <p id="toast-msg" class="text-xs text-gray-300">Produit t-zad f panier dyalk.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="details-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-cardbg border border-sky-400/20 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeDetailsModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-xl bg-black/50 hover:bg-black text-gray-300 hover:text-white flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-banner" class="h-40 flex items-center justify-center relative">
+                <!-- Dynamic Icon -->
+            </div>
+            <div class="p-6">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                    <span id="modal-category" class="text-xs font-gaming font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-nexisblue/20 text-nexiscyan">Catégorie</span>
+                    <span id="modal-price" class="font-display text-2xl font-black text-white">10 DH</span>
+                </div>
+                <h3 id="modal-title" class="font-gaming text-2xl font-bold text-white mb-2">Produit</h3>
+                <p id="modal-desc" class="text-sm text-gray-400 mb-4 leading-relaxed">Description...</p>
+                
+                <div class="bg-darkbg/90 border border-sky-400/10 rounded-2xl p-4 mb-6">
+                    <p class="text-xs font-bold uppercase tracking-wider text-sky-300 mb-2.5">Chno Kayn F Had L-Pack:</p>
+                    <ul id="modal-features" class="space-y-2 text-sm text-gray-200">
+                        <!-- Dynamic list -->
+                    </ul>
+                </div>
+
+                <button id="modal-add-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-nexisblue to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white font-gaming font-bold text-lg transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+                    <i class="fa-solid fa-cart-plus"></i> Ajouter au Panier
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Receipt / Discord Ticket Modal -->
+    <div id="receipt-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="bg-cardbg border border-nexiscyan/40 rounded-3xl max-w-lg w-full p-6 sm:p-7 relative shadow-2xl">
+            <button onclick="closeReceiptModal()" class="absolute top-4 right-4 w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-nexisblue/25 text-nexiscyan flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-ticket"></i>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl font-bold text-white">Talab Dyalk Wajed!</h3>
+                    <p class="text-xs text-gray-400">Copier had ticket w siftou l-Owner (YOUNESS•RICARDO) f Discord wla WhatsApp.</p>
+                </div>
+            </div>
+
+            <!-- Formatted Ticket Box -->
+            <div class="bg-darkbg border border-sky-400/20 rounded-2xl p-4 mb-5 font-mono text-xs sm:text-sm text-gray-200 whitespace-pre-wrap select-all leading-relaxed" id="ticket-output">
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="copyDiscordTicket()" class="flex-1 py-3.5 px-5 rounded-xl bg-gradient-to-r from-nexisblue to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white font-gaming font-bold text-base transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+                    <i class="fa-regular fa-copy"></i> Copier Ticket Discord
+                </button>
+                <a href="https://wa.me/212684681909" target="_blank" class="py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-gaming font-bold text-base transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. SLIDE-OVER SHOPPING CART DRAWER -->
+    <div id="cart-backdrop" onclick="toggleCart(false)" class="fixed inset-0 z-40 bg-black/75 backdrop-blur-xs hidden transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-cardbg border-l border-sky-400/20 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Cart Header -->
+        <div class="px-6 py-5 border-b border-sky-400/15 flex items-center justify-between bg-darkbg/60">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-nexisblue/20 text-nexiscyan flex items-center justify-center">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                </div>
+                <div>
+                    <h2 class="font-display text-lg font-bold text-white">Panier Dyalk</h2>
+                    <p class="text-xs text-gray-400"><span id="drawer-count">0</span> produit(s) m-khtarin</p>
+                </div>
+            </div>
+            <button onclick="toggleCart(false)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Cart Body (Scrollable) -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="space-y-3">
+                <!-- Rendered via JS -->
+            </div>
+
+            <!-- Checkout Form Section -->
+            <div id="checkout-fields" class="hidden space-y-4 pt-4 border-t border-sky-400/15">
+                <!-- Player Nickname -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-sky-200 mb-1.5">
+                        Smiytk f Server (IG Nickname) <span class="text-red-400">*</span>
+                    </label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user-tag absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-400/70 text-sm"></i>
+                        <input type="text" id="cart-player-name" oninput="syncPlayerName(this.value)" placeholder="Matalan: Youness_Ricardo" class="w-full bg-darkbg border border-sky-400/20 focus:border-nexiscyan rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition">
+                    </div>
+                    <p id="nickname-error" class="hidden text-xs text-red-400 mt-1"><i class="fa-solid fa-circle-exclamation mr-1"></i>Darori tkteb smiytk f-l'game bach n-siftolik l-items!</p>
+                </div>
+
+                <!-- Payment Method Selector -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-sky-200 mb-2">Tariqat Dfi3 (Payment)</label>
+                    <div class="grid grid-cols-2 gap-2.5" id="payment-methods">
+                        <button type="button" onclick="selectPayment(this, 'CIH Bank')" class="payment-btn active border-2 border-nexiscyan bg-nexisblue/15 rounded-xl p-2.5 text-left transition cursor-pointer">
+                            <div class="flex items-center gap-2 text-white font-gaming font-bold text-sm">
+                                <i class="fa-solid fa-building-columns text-nexiscyan"></i> CIH Bank
+                            </div>
+                            <span class="text-[11px] text-gray-400 block">Virement / App</span>
+                        </button>
+                        <button type="button" onclick="selectPayment(this, 'CashPlus / Wafacash')" class="payment-btn border border-white/10 bg-darkbg hover:border-sky-400/30 rounded-xl p-2.5 text-left transition cursor-pointer">
+                            <div class="flex items-center gap-2 text-white font-gaming font-bold text-sm">
+                                <i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> CashPlus
+                            </div>
+                            <span class="text-[11px] text-gray-400 block">Wafacash / Agence</span>
+                        </button>
+                        <button type="button" onclick="selectPayment(this, 'Recharge (Orange/Inwi)')" class="payment-btn border border-white/10 bg-darkbg hover:border-sky-400/30 rounded-xl p-2.5 text-left transition cursor-pointer">
+                            <div class="flex items-center gap-2 text-white font-gaming font-bold text-sm">
+                                <i class="fa-solid fa-mobile-retro text-amber-400"></i> Recharge
+                            </div>
+                            <span class="text-[11px] text-gray-400 block">Orange / Inwi</span>
+                        </button>
+                        <button type="button" onclick="selectPayment(this, 'PayPal')" class="payment-btn border border-white/10 bg-darkbg hover:border-sky-400/30 rounded-xl p-2.5 text-left transition cursor-pointer">
+                            <div class="flex items-center gap-2 text-white font-gaming font-bold text-sm">
+                                <i class="fa-brands fa-paypal text-sky-400"></i> PayPal
+                            </div>
+                            <span class="text-[11px] text-gray-400 block">International</span>
+                        </button>
+                    </div>
+
+                    <!-- Owner Numbers Reference Box -->
+                    <div class="mt-3 bg-blue-950/50 border border-sky-400/20 rounded-xl p-3 text-xs text-sky-100 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-sky-300 font-bold block">N-mrat d-Tawasol / Khlass:</span>
+                            <span class="font-mono font-bold text-white">0684681909 / 0707627802</span>
+                        </div>
+                        <button type="button" onclick="copyPhone('0684681909 / 0707627802')" class="px-2.5 py-1.5 rounded-lg bg-nexisblue/30 hover:bg-nexisblue/50 text-sky-300 transition cursor-pointer" title="Copier">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Footer / Summary -->
+        <div id="cart-footer" class="hidden p-6 border-t border-sky-400/15 bg-darkbg/95 space-y-3">
+            <div class="space-y-1.5 text-sm">
+                <div class="flex justify-between text-gray-400">
+                    <span>Sous-total:</span>
+                    <span id="cart-subtotal">0 DH</span>
+                </div>
+                <div class="flex justify-between text-white font-display font-bold text-lg pt-2 border-t border-white/10">
+                    <span>Total:</span>
+                    <span id="cart-total" class="text-nexiscyan">0 DH</span>
+                </div>
+            </div>
+            <button onclick="checkoutOrder()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-nexisblue to-sky-500 hover:from-blue-500 hover:to-sky-400 active:scale-[0.99] text-white font-gaming font-extrabold text-lg tracking-wide transition flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+                <i class="fa-solid fa-check-circle"></i> Kmmel Talab (Checkout)
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. HEADER NAVIGATION BAR -->
+    <header class="sticky top-0 z-30 glass-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-4">
+                <!-- Store Logo -->
+                <a href="#" class="flex items-center gap-3 shrink-0 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-nexisblue to-nexiscyan flex items-center justify-center text-white font-display font-black text-xl shadow-lg shadow-blue-600/30 group-hover:scale-105 transition">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-display font-extrabold text-lg sm:text-xl tracking-wider text-white">RP-NEXIS-<span class="text-nexiscyan">SHOP</span></span>
+                        <span class="block text-[10px] font-gaming uppercase tracking-widest text-sky-300/80 -mt-1">SA-MP Roleplay Store</span>
+                    </div>
+                </a>
+
+                <!-- Player Nickname Quick Link Input -->
+                <div class="hidden md:flex items-center bg-cardbg border border-sky-400/20 focus-within:border-nexiscyan rounded-xl px-3.5 py-2 w-72 transition">
+                    <i class="fa-solid fa-gamepad text-nexiscyan mr-2.5 text-sm"></i>
+                    <input type="text" id="nav-player-name" oninput="syncPlayerName(this.value)" placeholder="Smiytk f Server (ex: Youness_RP)" class="bg-transparent text-xs text-white placeholder-gray-500 outline-none w-full font-medium">
+                </div>
+
+                <!-- Cart Button -->
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleCart(true)" class="relative flex items-center gap-2.5 bg-cardbg hover:bg-cardhover border border-nexiscyan/40 px-4 py-2.5 rounded-xl text-white font-gaming font-bold text-base transition shadow-md cursor-pointer">
+                        <i class="fa-solid fa-cart-shopping text-nexiscyan"></i>
+                        <span class="hidden sm:inline">Panier</span>
+                        <span id="nav-cart-badge" class="bg-nexisblue text-white font-display font-black text-xs px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Nickname Input Bar -->
+            <div class="md:hidden pb-3">
+                <div class="flex items-center bg-cardbg border border-sky-400/20 focus-within:border-nexiscyan rounded-xl px-3.5 py-2 w-full">
+                    <i class="fa-solid fa-gamepad text-nexiscyan mr-2.5 text-sm"></i>
+                    <input type="text" id="mobile-player-name" oninput="syncPlayerName(this.value)" placeholder="Kteb smiytk f Server (ex: Youness_RP)" class="bg-transparent text-xs text-white placeholder-gray-500 outline-none w-full">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="pt-6 pb-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="hero-banner-bg border border-sky-400/20 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+            <div class="max-w-2xl relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-nexisblue/25 border border-nexiscyan/35 text-nexiscyan text-xs font-gaming font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-star"></i> Boutique Officielle • RP-NEXIS-SHOP
+                </div>
+                <h1 class="font-display text-2xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-3">
+                    T-JHEZ F SERVER B-<span class="text-nexiscyan">TOMOBILAT</span>, DYOR & VIP!
+                </h1>
+                <p class="text-gray-300 text-sm sm:text-base mb-6 leading-relaxed">
+                    Khoud NRG-500, Sultan, Bullet GT, Vila, Garage wla VIP Toys b-atmina m-nassba (10 DH - 20 DH). Taslim sari3 w m-admon 100% m3a Owner <span class="text-sky-300 font-bold">YOUNESS•RICARDO</span>.
+                </p>
+
+                <!-- Action & Badges -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="document.getElementById('category-tabs').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-nexisblue to-sky-500 hover:from-blue-500 hover:to-sky-400 active:scale-95 text-white font-gaming font-bold text-sm sm:text-base px-6 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/30 cursor-pointer">
+                        <i class="fa-solid fa-bag-shopping"></i> T-saweq Daba
+                    </button>
+                    <div class="inline-flex items-center gap-2 bg-darkbg/90 border border-sky-400/20 px-4 py-2.5 rounded-xl text-xs text-sky-200 font-medium">
+                        <i class="fa-solid fa-bolt text-nexiscyan"></i> Taslim f aqal mn 5 min
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decorative Custom SVG Graphic Right -->
+            <div class="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 w-52 h-52 rounded-full bg-nexisblue/15 border border-nexiscyan/25 items-center justify-center pointer-events-none">
+                <svg class="w-28 h-28 text-nexiscyan/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY TABS & SEARCH BAR -->
+    <section class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <!-- Category Filter Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" id="category-tabs">
+                <button onclick="filterCategory('all', this)" class="cat-btn active shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-gradient-to-r from-nexisblue to-sky-500 text-white transition cursor-pointer shadow-md">
+                    <i class="fa-solid fa-border-all mr-1.5"></i> Koulchi
+                </button>
+                <button onclick="filterCategory('vehicles', this)" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-cardbg hover:bg-cardhover text-gray-300 border border-sky-400/15 transition cursor-pointer">
+                    <i class="fa-solid fa-car-side text-nexiscyan mr-1.5"></i> Tomobilat & Moto
+                </button>
+                <button onclick="filterCategory('properties', this)" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-cardbg hover:bg-cardhover text-gray-300 border border-sky-400/15 transition cursor-pointer">
+                    <i class="fa-solid fa-building text-indigo-400 mr-1.5"></i> Dyor & Business
+                </button>
+                <button onclick="filterCategory('vip', this)" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-cardbg hover:bg-cardhover text-gray-300 border border-sky-400/15 transition cursor-pointer">
+                    <i class="fa-solid fa-gem text-amber-400 mr-1.5"></i> VIP & Toys
+                </button>
+            </div>
+
+            <!-- Live Search Bar -->
+            <div class="relative w-full lg:w-72 shrink-0">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-400/70 text-sm"></i>
+                <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Qelleb (NRG, Sultan, Vila...)" class="w-full bg-cardbg border border-sky-400/20 focus:border-nexiscyan rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PRODUCT CATALOG GRID -->
+    <main class="pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Products rendered dynamically via JS -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="empty-search" class="hidden text-center py-16 bg-cardbg/50 border border-sky-400/10 rounded-3xl">
+            <div class="w-14 h-14 rounded-2xl bg-nexisblue/15 text-nexiscyan flex items-center justify-center text-2xl mx-auto mb-3">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+            <h3 class="font-gaming text-xl font-bold text-white mb-1">Ma lqina walo!</h3>
+            <p class="text-sm text-gray-400">Jerreb t-qelleb b-smiya okhra wla khtar catégorie okhra.</p>
+        </div>
+    </main>
+
+    <!-- 5. FOOTER -->
+    <footer class="bg-cardbg/60 border-t border-sky-400/15 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+                <div class="flex items-center justify-center md:justify-start gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-nexisblue to-nexiscyan flex items-center justify-center text-white font-display font-black text-sm">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <span class="font-display font-bold text-lg text-white">RP-NEXIS-<span class="text-nexiscyan">SHOP</span></span>
+                </div>
+                <p class="text-xs text-gray-400 mt-1.5">Boutique Officielle dyal Server SA-MP Roleplay • Taslim Sari3 24/7.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 text-xs sm:text-sm">
+                <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-darkbg border border-sky-400/20 text-sky-200 font-display font-bold">
+                    <i class="fa-solid fa-crown text-amber-400"></i> Owner: YOUNESS•RICARDO
+                </span>
+                <button onclick="copyPhone('0684681909 / 0707627802')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-darkbg hover:bg-blue-950 border border-sky-400/20 text-white font-gaming font-bold transition cursor-pointer">
+                    <i class="fa-solid fa-phone text-nexiscyan"></i> 0684681909 / 0707627802
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shop Logic & Exact Catalog Data -->
+    <script>
+        // Exact Product Catalog requested
+        const PRODUCTS = [
+            {
+                id: 'nrg-500',
+                name: 'NRG-500',
+                category: 'vehicles',
+                categoryLabel: 'Tomobilat & Moto',
+                price: 15,
+                badge: 'Moto Sport',
+                gradient: 'from-blue-900/60 via-cardbg to-cardbg',
+                iconColor: 'text-nexiscyan',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 6h3l2 5.5M5.5 17.5L9 11h5l2.5 6.5M9 11L7 8H5"/></svg>`,
+                shortDesc: 'Moto NRG-500 khfifa w sari3a bzzaf f z-znaqi dyal Los Santos.',
+                features: [
+                    'Sor3a 3aliya w ta7akom m-tazan',
+                    'Custom Color & Rims',
+                    'Assurance 100% Gratuit',
+                    'Taslim Fowri IG'
+                ]
+            },
+            {
+                id: 'sultan',
+                name: 'Sultan',
+                category: 'vehicles',
+                categoryLabel: 'Tomobilat & Moto',
+                price: 10,
+                badge: 'Drift & 4 Places',
+                gradient: 'from-sky-900/50 via-cardbg to-cardbg',
+                iconColor: 'text-sky-400',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13l2-5h14l2 5M3 13v5h2v-2h14v2h2v-5M3 13h18"/><circle cx="7" cy="15" r="1.2"/><circle cx="17" cy="15" r="1.2"/></svg>`,
+                shortDesc: 'Sultan RS 4 places m-zyana l-drift w l-kharjat m3a s-shab wla l-Gang.',
+                features: [
+                    'Full Tuning + Nitro x10',
+                    '4 Places (Mzyana l-Gangs)',
+                    'Custom Paintjob & Wheels',
+                    'Assurance 100% Gratuit'
+                ]
+            },
+            {
+                id: 'bullet-gt',
+                name: 'Bullet GT',
+                category: 'vehicles',
+                categoryLabel: 'Tomobilat & Moto',
+                price: 10,
+                badge: 'Super Sport',
+                gradient: 'from-indigo-900/55 via-cardbg to-cardbg',
+                iconColor: 'text-indigo-400',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2 14l2.5-4.5C5.2 8.2 6.5 7.5 8 7.5h8c1.5 0 2.8.7 3.5 2L22 14v4h-2v-2H4v2H2v-4z"/><path d="M6 12h12"/><circle cx="6.5" cy="14.5" r="1"/><circle cx="17.5" cy="14.5" r="1"/></svg>`,
+                shortDesc: 'Tomobil Bullet GT sport b-design wa3er w sor3a khayaliya f l-autoroute.',
+                features: [
+                    'Top Speed 3ali + Nitro x10',
+                    'Design Sport Classic GT',
+                    'Custom Color & Plate',
+                    'Taslim Fowri IG'
+                ]
+            },
+            {
+                id: 'vip-toys',
+                name: 'VIP Toys',
+                category: 'vip',
+                categoryLabel: 'VIP & Toys',
+                price: 10,
+                badge: 'VIP Accessoires',
+                gradient: 'from-amber-900/45 via-cardbg to-cardbg',
+                iconColor: 'text-amber-400',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+                shortDesc: 'Accessoires VIP nadirin (Ndadar, Kask, Sacs, Katana...) l-skin dyalk.',
+                features: [
+                    'Access l-Menu /toys kaml',
+                    'Items VIP Nadirin & Custom',
+                    'T9dr t-rigel l-blassa w l-hajm (/edittoy)',
+                    'Kay-bqaw m-sajlin f l-compte dima'
+                ]
+            },
+            {
+                id: 'business',
+                name: 'Business',
+                category: 'properties',
+                categoryLabel: 'Dyor & Business',
+                price: 15,
+                badge: 'Machrou3 IG',
+                gradient: 'from-blue-800/55 via-cardbg to-cardbg',
+                iconColor: 'text-sky-300',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 21V7l8-4 8 4v14M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg>`,
+                shortDesc: 'Machrou3 / Charika IG kat-dakhel lik l-flouss koul sa3a automatiquement.',
+                features: [
+                    'Arba7 Yaoumiya (Passive Income)',
+                    'T7ekkem f l-atmina w l-produits',
+                    'M-sajla b-smiytk f l-map',
+                    'T9dr t-bi3ha l-players okhrin IG'
+                ]
+            },
+            {
+                id: 'garage',
+                name: 'Garage',
+                category: 'properties',
+                categoryLabel: 'Dyor & Business',
+                price: 15,
+                badge: 'Private Storage',
+                gradient: 'from-indigo-800/55 via-cardbg to-cardbg',
+                iconColor: 'text-indigo-300',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-6 9 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V10z"/><path stroke-linecap="round" d="M7 21v-8h10v8M7 16h10"/></svg>`,
+                shortDesc: 'Garage privé fin t-khebbi tomobilatk w l-items dyalk b-aman.',
+                features: [
+                    'Kay-hezz hta l 6 Tomobilat',
+                    'Coffre (Safe) l-Items & Flouss',
+                    'Blassa m-amna b-Code Pin',
+                    'Khtar l-blassa li bghiti f-map'
+                ]
+            },
+            {
+                id: 'vila',
+                name: 'Vila',
+                category: 'properties',
+                categoryLabel: 'Dyor & Business',
+                price: 20,
+                badge: 'Luxury House',
+                gradient: 'from-sky-800/60 via-cardbg to-cardbg',
+                iconColor: 'text-nexiscyan',
+                svg: `<svg class="w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-8 9 8M5 10v10h14V10M10 20v-5h4v5"/></svg>`,
+                shortDesc: 'Vila kbira w luxury f ahsan hay f Los Santos m3a interior VIP.',
+                features: [
+                    'Interior VIP Kbir (2 Etages)',
+                    'Parking Privé + Garden',
+                    'Coffre Kbir l-Flouss w Items',
+                    'M-sajla b-smiytk dima'
+                ]
+            }
+        ];
+
+        // State
+        let cart = [];
+        let activeCategory = 'all';
+        let searchQuery = '';
+        let selectedPayment = 'CIH Bank';
+        let playerNickname = '';
+
+        // Render Products Grid
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-search');
+
+            const filtered = PRODUCTS.filter(p => {
+                const matchCat = activeCategory === 'all' || p.category === activeCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                    p.shortDesc.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(product => `
+                <div class="bg-cardbg hover:bg-cardhover border border-sky-400/15 hover:border-nexiscyan/50 rounded-3xl overflow-hidden flex flex-col justify-between transition duration-300 group shadow-lg shadow-black/40">
+                    <div>
+                        <!-- Visual Custom Banner -->
+                        <div class="h-36 bg-gradient-to-br ${product.gradient} p-5 relative flex items-center justify-center border-b border-sky-400/10 overflow-hidden">
+                            <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-lg bg-darkbg/80 backdrop-blur-xs text-[11px] font-gaming font-bold uppercase tracking-wider text-sky-200 border border-sky-400/20">
+                                ${product.categoryLabel}
+                            </span>
+                            <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-lg bg-nexisblue/30 text-nexiscyan text-[11px] font-gaming font-bold uppercase border border-nexiscyan/25">
+                                ${product.badge}
+                            </span>
+                            <div class="w-16 h-16 rounded-2xl bg-darkbg/90 border border-sky-400/20 flex items-center justify-center ${product.iconColor} group-hover:scale-110 transition duration-300 shadow-xl">
+                                ${product.svg}
+                            </div>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-5">
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <h3 class="font-gaming text-xl font-bold text-white leading-snug">${product.name}</h3>
+                                <span class="font-display text-lg font-black text-nexiscyan bg-nexisblue/15 px-2.5 py-0.5 rounded-lg border border-nexiscyan/25 shrink-0">${product.price} DH</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-4 line-clamp-2 leading-relaxed">${product.shortDesc}</p>
+
+                            <!-- Mini Feature List -->
+                            <ul class="space-y-1.5 text-xs text-gray-300 mb-4">
+                                ${product.features.slice(0, 3).map(feat => `
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-nexiscyan text-[10px]"></i>
+                                        <span class="truncate">${feat}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Buttons -->
+                    <div class="px-5 pb-5 pt-2 flex items-center gap-2">
+                        <button onclick="openDetailsModal('${product.id}')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-sky-200 hover:text-white text-xs font-gaming font-bold transition cursor-pointer" title="Details">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Details
+                        </button>
+                        <button onclick="addToCart('${product.id}')" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-nexisblue to-sky-500 hover:from-blue-500 hover:to-sky-400 active:scale-95 text-white font-gaming font-bold text-sm transition flex items-center justify-center gap-2 shadow-md shadow-blue-600/25 cursor-pointer">
+                            <i class="fa-solid fa-cart-plus"></i> Ajouter au Panier
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Category Filter
+        function filterCategory(cat, btnElement) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = "cat-btn shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-cardbg hover:bg-cardhover text-gray-300 border border-sky-400/15 transition cursor-pointer";
+            });
+            btnElement.className = "cat-btn active shrink-0 px-4 py-2.5 rounded-xl font-gaming font-bold text-sm sm:text-base bg-gradient-to-r from-nexisblue to-sky-500 text-white transition cursor-pointer shadow-md";
+            renderProducts();
+        }
+
+        // Live Search
+        function handleSearch(val) {
+            searchQuery = val.trim();
+            renderProducts();
+        }
+
+        // Sync Player Nickname
+        function syncPlayerName(val) {
+            playerNickname = val;
+            document.getElementById('nav-player-name').value = val;
+            document.getElementById('mobile-player-name').value = val;
+            document.getElementById('cart-player-name').value = val;
+            if (val.trim().length > 0) {
+                document.getElementById('nickname-error').classList.add('hidden');
+            }
+        }
+
+        // Add Item to Cart
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast('T-ZAD L\'PANIER!', `${product.name} (${product.price} DH) t-zad f panier.`, 'fa-cart-plus');
+        }
+
+        // Change Quantity in Cart
+        function updateQty(productId, delta) {
+            const idx = cart.findIndex(item => item.id === productId);
+            if (idx === -1) return;
+
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) {
+                cart.splice(idx, 1);
+            }
+            updateCartUI();
+        }
+
+        // Remove Item from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Update Cart UI & Totals
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('nav-cart-badge').textContent = totalItems;
+            document.getElementById('drawer-count').textContent = totalItems;
+
+            const container = document.getElementById('cart-items-container');
+            const checkoutFields = document.getElementById('checkout-fields');
+            const cartFooter = document.getElementById('cart-footer');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 px-4 bg-darkbg/70 border border-sky-400/10 rounded-2xl">
+                        <div class="w-14 h-14 rounded-2xl bg-nexisblue/15 text-nexiscyan flex items-center justify-center text-2xl mx-auto mb-3">
+                            <i class="fa-solid fa-cart-arrow-down"></i>
+                        </div>
+                        <p class="font-gaming text-lg font-bold text-gray-200">Panier Khawi!</p>
+                        <p class="text-xs text-gray-400 mt-1">Khtar chi produit mn RP-NEXIS-SHOP w zidou l-panier.</p>
+                    </div>
+                `;
+                checkoutFields.classList.add('hidden');
+                cartFooter.classList.add('hidden');
+                return;
+            }
+
+            checkoutFields.classList.remove('hidden');
+            cartFooter.classList.remove('hidden');
+
+            container.innerHTML = cart.map(item => `
+                <div class="bg-darkbg border border-sky-400/15 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-cardbg border border-sky-400/15 flex items-center justify-center ${item.iconColor} shrink-0 scale-75">
+                            ${item.svg}
+                        </div>
+                        <div class="truncate">
+                            <h4 class="font-gaming font-bold text-sm text-white truncate">${item.name}</h4>
+                            <span class="text-xs text-nexiscyan font-bold">${item.price * item.qty} DH</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div class="flex items-center bg-cardbg border border-sky-400/15 rounded-lg">
+                            <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer">-</button>
+                            <span class="px-2 text-xs font-bold text-white">${item.qty}</span>
+                            <button onclick="updateQty('${item.id}', 1)" class="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer">+</button>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="w-7 h-7 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-400 flex items-center justify-center text-xs transition cursor-pointer" title="Mse7">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('cart-subtotal').textContent = `${total} DH`;
+            document.getElementById('cart-total').textContent = `${total} DH`;
+        }
+
+        // Select Payment Method
+        function selectPayment(btn, method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-btn').forEach(b => {
+                b.className = "payment-btn border border-white/10 bg-darkbg hover:border-sky-400/30 rounded-xl p-2.5 text-left transition cursor-pointer";
+            });
+            btn.className = "payment-btn active border-2 border-nexiscyan bg-nexisblue/15 rounded-xl p-2.5 text-left transition cursor-pointer";
+        }
+
+        // Checkout & Generate Discord Ticket Receipt
+        function checkoutOrder() {
+            const nickInput = document.getElementById('cart-player-name');
+            const nick = nickInput.value.trim();
+
+            if (!nick) {
+                document.getElementById('nickname-error').classList.remove('hidden');
+                nickInput.focus();
+                return;
+            }
+
+            const orderId = 'NXS-' + Math.floor(1000 + Math.random() * 9000);
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const itemsLines = cart.map(i => `• ${i.qty}x ${i.name} (${i.price * i.qty} DH)`).join('\n');
+
+            const ticketText = 
+`🛒 **TALAB JDID - RP-NEXIS-SHOP**
+👑 **Owner:** YOUNESS•RICARDO
+📞 **Contact:** 0684681909 / 0707627802
+━━━━━━━━━━━━━━━━━━━━━━
+🆔 **Order ID:** #${orderId}
+🎮 **IG Nickname:** ${nick}
+💳 **Tariqat Dfi3:** ${selectedPayment}
+━━━━━━━━━━━━━━━━━━━━━━
+📦 **L-Produits:**
+${itemsLines}
+━━━━━━━━━━━━━━━━━━━━━━
+💰 **TOTAL L-KHLASS:** ${total} DH`;
+
+            document.getElementById('ticket-output').textContent = ticketText;
+            toggleCart(false);
+
+            const receiptModal = document.getElementById('receipt-modal');
+            receiptModal.classList.remove('hidden');
+            receiptModal.classList.add('flex');
+        }
+
+        function closeReceiptModal() {
+            const receiptModal = document.getElementById('receipt-modal');
+            receiptModal.classList.add('hidden');
+            receiptModal.classList.remove('flex');
+        }
+
+        // Copy Ticket for Discord
+        function copyDiscordTicket() {
+            const text = document.getElementById('ticket-output').textContent;
+            copyToClipboard(text);
+            showToast('TICKET COPIED!', 'Sift had ticket l-Discord wla WhatsApp dyal Owner.', 'fa-check');
+        }
+
+        // Copy Phone Number Helper
+        function copyPhone(num) {
+            copyToClipboard(num);
+            showToast('NEMRA COPIED!', `${num} t-copiat f clipboard.`, 'fa-phone');
+        }
+
+        // Safe Clipboard Helper
+        function copyToClipboard(str) {
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.style.position = 'fixed';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+            } catch (e) {
+                console.error(e);
+            }
+            document.body.removeChild(el);
+        }
+
+        // Slide-over Cart Drawer Toggle
+        function toggleCart(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            if (open) {
+                backdrop.classList.remove('hidden');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                backdrop.classList.add('hidden');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        // Product Details Modal
+        function openDetailsModal(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const banner = document.getElementById('modal-banner');
+            banner.className = `h-40 bg-gradient-to-br ${product.gradient} flex items-center justify-center relative border-b border-sky-400/15`;
+            banner.innerHTML = `
+                <div class="w-20 h-20 rounded-3xl bg-darkbg/90 border border-sky-400/20 flex items-center justify-center ${product.iconColor} shadow-2xl">
+                    ${product.svg}
+                </div>
+            `;
+
+            document.getElementById('modal-category').textContent = product.categoryLabel;
+            document.getElementById('modal-price').textContent = `${product.price} DH`;
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-desc').textContent = product.shortDesc;
+
+            document.getElementById('modal-features').innerHTML = product.features.map(f => `
+                <li class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-circle-check text-nexiscyan text-xs"></i>
+                    <span>${f}</span>
+                </li>
+            `).join('');
+
+            const addBtn = document.getElementById('modal-add-btn');
+            addBtn.onclick = () => {
+                addToCart(product.id);
+                closeDetailsModal();
+            };
+
+            const modal = document.getElementById('details-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDetailsModal() {
+            const modal = document.getElementById('details-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close modals on outside click
+        document.getElementById('details-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeDetailsModal();
+        });
+        document.getElementById('receipt-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeReceiptModal();
+        });
+
+        // Toast Notification Helper
+        function showToast(title, msg, iconClass = 'fa-check') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-msg').textContent = msg;
+            document.getElementById('toast-icon').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initial Render
+        renderProducts();
+        updateCartUI();
+    </script>
+</body>
+</html>
